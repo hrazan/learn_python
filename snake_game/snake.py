@@ -60,9 +60,10 @@ class Snake:
     def increase_body(self):
         self.__is_increase_body = True
 
-    def body_position(self):
-        _body_positon = []
-        print(len(self.__snake_bodies))
-        for i in range(1, len(self.__snake_bodies), 1):
-            _body_positon.append(self.__snake_bodies[i].pos())
-        return _body_positon
+    def is_body_struck(self):
+        for _snake_body in self.__snake_bodies[1:]:
+            # if self.__snake_bodies[i].pos() == self.head.pos():
+            #     return True
+            if _snake_body.distance(self.head) < 10:
+                return True
+        return False

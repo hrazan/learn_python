@@ -24,26 +24,37 @@ food = Food()
 score_board = ScoreBoard(screen.window_height() / 2)
 # score_board.update_score(score)
 
+is_pause = False
+def pause():
+    global is_pause
+    is_pause = not is_pause
+    print("PAUSE")
+
+screen.onkey(pause, "space")
+
 while is_game_on:
     screen.update()
-    time.sleep(0.1/snake.speed)
-    snake.move()
-
-    if snake.head.distance(food) < 15:
-        food.refresh()
-        score_board.score += 1
-        snake.increase_body()
-        snake.speed += 0.01
-        score_board.update_score()
-        # print("NOMNOM")
+    if is_pause:
+        pass
     else:
-        print(snake.body_position())
-        print(snake.head.pos())
-        if snake.head.pos() in snake.body_position():
-            print("body struck!")
-            is_game_on = False
-        elif (abs(snake.head.pos()[0] * 2) >= screen.window_width()) or (abs(snake.head.pos()[1] * 2) >= screen.window_height()):
-            print("window struck")
-            is_game_on = False
+        time.sleep(0.1/snake.speed)
+        snake.move()
 
+        if snake.head.distance(food) < 15:
+            food.refresh()
+            score_board.score += 1
+            snake.increase_body()
+            snake.speed += 0.01
+            score_board.update_score()
+            # print("NOMNOM")
+        else:
+            if snake.is_body_struck():
+                print("body struck!")
+                is_game_on = False
+            elif (abs(snake.head.pos()[0] * 2) >= screen.window_width()) or (abs(snake.head.pos()[1] * 2) >= screen.window_height()):
+                print("window struck")
+                is_game_on = False
+
+
+score_board.game_over()
 screen.exitonclick()

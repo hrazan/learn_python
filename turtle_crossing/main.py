@@ -41,6 +41,12 @@ while is_game_on:
     if len(obstacles) > 0:
         for obstacle in obstacles:
             obstacle.move()
+            if obstacle.distance(hero) < 20 or (((hero.xcor() - 10) < (obstacle.xcor() + 30)) and 
+                                                ((hero.xcor() + 10) > (obstacle.xcor() - 30)) and 
+                                                ((hero.ycor() - 10) < (obstacle.ycor() + 10)) and 
+                                                ((hero.ycor() + 10) > (obstacle.ycor() - 10))):
+                is_game_on = False
+
             if obstacle.is_over():
                 obstacles.remove(obstacle)
 
@@ -48,7 +54,5 @@ while is_game_on:
         level.level += 1
         hero.reset_position()
 
-    
-
-
+level.game_over()
 screen.exitonclick()

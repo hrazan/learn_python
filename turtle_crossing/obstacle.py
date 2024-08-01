@@ -18,10 +18,12 @@ class Obstacle(Turtle):
         else:
             self.setheading(180)
 
+        self.__starty = random.randint(-self. __max_height + 75, self. __max_height - 50)
+        # print(self.__starty)
         if self.heading() >= 180:
-            self.goto( self.__max_width + 40, random.randint(50, self. __max_height - 50))
+            self.goto( self.__max_width + 40, self.__starty)
         else:
-            self.goto(-self.__max_width - 40, random.randint(50, self. __max_height - 50))
+            self.goto(-self.__max_width - 40, self.__starty)
 
     def move(self):
         self.forward(self.__speed)

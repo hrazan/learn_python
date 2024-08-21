@@ -74,6 +74,28 @@ def save_entry():
     else:
         messagebox.showerror(title="ERROR", message="Please fill in all the data!")
 
+# ---------------------------- SEARCH WEBSITE DATA ------------------------------- #
+def search_website_data():
+    website_name = website_entry.get()
+    try:
+        with open("save_data.json", mode="r") as file:
+            file_data_dict = json.load(file)
+            file.close()
+    except FileNotFoundError:
+        pass
+    else:
+        if website_name in file_data_dict:
+            email_data = file_data_dict[website_name]["email"]
+            password_data = file_data_dict[website_name]["password"]
+            messagebox.showinfo(title="Search", message=
+                                f"Data found:\n"
+                                f"> Website: {website_name}\n"
+                                f"> Email/Username: {email_data}\n"
+                                f"> Password: {password_data}\n")
+            return
+    
+    messagebox.showinfo(title="Search", message=f"Data for {website_name} not found")
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro")
@@ -87,25 +109,28 @@ canvas.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_entry = Entry(width=40)
-website_entry.grid(column=1, row=1, columnspan=2)
+website_entry = Entry(width=22)
+website_entry.grid(column=1, row=1)
+
+website_search_button = Button(text="Search", width=15, highlightthickness=0, command=search_website_data)
+website_search_button.grid(column=2, row=1)
 
 email_label = Label(text="Email/Username:")
 email_label.grid(column=0, row=2)
 
-email_entry = Entry(width=40)
+email_entry = Entry(width=41)
 email_entry.grid(column=1, row=2, columnspan=2)
 
 password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
-password_entry = Entry(width=21)
+password_entry = Entry(width=22)
 password_entry.grid(column=1, row=3)
 
-password_button = Button(text="Generate Password", highlightthickness=0, command=generate_password)
+password_button = Button(text="Generate Password", width=15, highlightthickness=0, command=generate_password)
 password_button.grid(column=2, row=3)
 
-add_button = Button(text="Add", width=36, highlightthickness=0, command=save_entry)
+add_button = Button(text="Add", width=38, highlightthickness=0, command=save_entry)
 add_button.grid(column=1, row=4, columnspan=2)
 
 window.mainloop()

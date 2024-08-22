@@ -98,7 +98,7 @@ def search_website_data():
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
-window.title("Pomodoro")
+window.title("Password Manager")
 window.config(padx=50, pady=50)
 
 canvas = Canvas(width=200, height=200, highlightthickness=0)
